@@ -1,2 +1,4 @@
 .idea
 servlets.iml
+out
+target
