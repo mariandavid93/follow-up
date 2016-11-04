@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iquest.model.User" table="USER">
+        <cache usage="read-write"/>
+        <id column="ID" name="id" type="integer">
+            <generator class="native"/>
+        </id>
+        <list name="accounts" cascade="delete-orphan" inverse="true">
+            <key column="personID"/>
+            <list-index base="1" column="id"/>
+            <one-to-many class="com.iquest.model.Account"/>
+        </list>
+        <property column="username" name="username" type="string"/>
+        <property column="password" name="password" type="string"/>
+        <property column="firstName" name="firstName" type="string"/>
+        <property column="surName" name="surName" type="string"/>
+        <property column="address" name="address" type="string"/>
+        <property column="age" name="age" type="integer"/>
+        <property column="email" name="email" type="string"/>
+    </class>
+
+    <class name="com.iquest.model.Account" table="ACCOUNT">
+        <cache usage="read-write"/>
+        <id column="id" name="id" type="integer">
+            <generator class="native"/>
+        </id>
+        <property column="accountNo" name="accountNo" type="string"/>
+        <one-to-one name="user" class="com.iquest.model.User"
+                    cascade="save-update"></one-to-one>
+        <property column="initial_balance" name="initialBalance"
+                  type="float"/>
+        <property column="current_balance" name="currentBalance"
+                  type="float"/>
+        <property column="economy_balance" name="economyBalance"
+                  type="float"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <mvc:annotation-driven/>
+
+    <context:component-scan base-package="com.iquest.controller"/>
+
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="accountDAO" class="com.iquest.dao.impl.AccountDAOImpl"/>
+    <bean id="institutionDAO" class="com.iquest.dao.impl.InstitutionDAOImpl"/>
+    <bean id="userDAO" class="com.iquest.dao.impl.UserDAOImpl"/>
+
+    <bean id="accountService" class="com.iquest.service.impl.AccountServiceImpl">
+        <property name="accountDAO" ref="accountDAO"/>
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="institutionService"
+          class="com.iquest.service.impl.InstitutionServiceImpl">
+        <property name="institutionDAO" ref="institutionDAO"/>
+    </bean>
+    <bean id="userService" class="com.iquest.service.impl.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+</beans>
